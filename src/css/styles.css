@@ -1,0 +1,80 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-image: url('../images/bacgroundimage2.jpg');
+    background-repeat: no-repeat;
+    width: 100%;
+    background-size: 100% 
+}
+.container-fluid{
+    background-color: rgb(25, 177, 204);
+    display: inline-block;
+ 
+}
+h1.title{
+   text-align: center;
+  
+}
+.innertitle{
+    display:block;    
+    margin-bottom:10px;
+    font-weight: 500;
+}
+label{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+h1 {
+    text-align: center;
+    background-color: rgb(25, 177, 204);
+    height: 55px;
+    padding: 2px;
+}
+#tasklist{
+ display:flex;
+ overflow:auto;
+
+}
+.btn-primary{
+    display:inline-block;
+}
+.btn-danger{
+    display:inline-block;
+	margin: 5px;
+}
+
+.card{
+    box-shadow: 0 6px 18px -9px rgba(0, 0, 0, 0.75);
+    transition: transform 0.1s ease-in;
+		width: 250px;
+	height: 300px;
+}
+.card:hover {
+    transform: scale(1.05);
+  }
+  .createdby{
+      font-size: 12px;
+  }
+  label{
+    background-color: rgb(25, 177, 204);
+  }
+
+  .container{
+      width: 800px;
+  }
+
+  @media screen and (max-width: 480px) {
+    #btnId {width: 200px;
+        font-size:20px;}
+    h1 {width: 200px;
+    font-size:20px;}
+  }
+/* ================ */
+.task{
+	border-left-style: solid;
+	border-left-color: green;
+}
+
