@@ -1,55 +1,68 @@
-import React, { useState } from "react";
+import React,{Component} from "react";
+import { useState, useEffect } from "react";
+import db from '../../firebase'
 import { useStateValue } from "../StateProvider";
 
-function FormF({
-  show,
-  name,
-  desc,
-  assi,
-  dued,
-  stat,
-  sname,
-  sdesc,
-  sassi,
-  sdued,
-  sstat,
-  onSubmit,
-}) 
+function FormF() 
 {
-const[{basket},dispatch]=useStateValue();
+const [{alltask }, dispatch] = useStateValue();
+const [name, setName] = useState("");
+const [description, setdescription] = useState("");
+const [assingedTo, setassingedTo] = useState("");
+const [duedate, setduedate] = useState("");
+const [status, setstatus] = useState("To Do");
+ const onSubmit = (e) => {
+    e.preventDefault(); //prevent default behaviour of the form
+    if (
+      name === "" ||
+      description === "" ||
+      duedate === "" ||
+      assingedTo === ""
+    ) {
+      alert("please add task!");
+    } else {
+      db.collection('tasks').add({
+        TaskName:name,
+        TaskDescription:description,
+        AssignedTo:assingedTo,
+        DueDate:duedate,
+        TaskStatus:status,
+      })
+   
+        dispatch({
+          type:'ADD_TO_Task',
+          item: {
+            TaskName:name,
+            TaskDescription:description,
+            AssignedTo:assingedTo,
+            DueDate:duedate,
+            TaskStatus:status,  
+          },
+        });
 
-console.log('ermi',basket)
-
-
-const addToTask=()=>{
-    dispatch({
-      type:'ADD_TO_BASKET',
-      item: {
-      name:name,
-      desc:desc,
-      assi:assi,
-      dued:dued,
-      stat:stat,    
-      },
-    });
-};
+       setName("");
+      setdescription("");
+      setduedate("");
+      setstatus("");
+      setassingedTo("");
+    }
+  };
   return (
     <div className="innerclass container">
       <div className="container-fluid">
         <div className="title">
-          <h1   onClick={addToTask}>Task List</h1>
+          <h1>Task List</h1>
         </div>
       </div>
       <br />
-      <br />
-     
+      <br />    
       <br />
       <br />
       <form id="myform">
         <div className="form-row">
           <div className="col-md-6 mb-3">
             <label for="validationCustom01">
-              <strong>Task Name</strong>
+              <strong>Task Name </strong>
             </label>
             <p
               style={{ display: "none" }}
@@ -63,7 +76,7 @@ const addToTask=()=>{
               className="form-control"
               id="validationCustom01"
               value={name}
-              onChange={(e) => sname(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
@@ -82,8 +95,8 @@ const addToTask=()=>{
               type="text"
               className="form-control"
               id="validationCustom02"
-              value={desc}
-              onChange={(e) => sdesc(e.target.value)}
+              value={description}
+              onChange={(e) => setdescription(e.target.value)}
               required
             />
           </div>
@@ -104,8 +117,8 @@ const addToTask=()=>{
               type="text"
               className="form-control"
               id="validationCustom03"
-              value={assi}
-              onChange={(e) => sassi(e.target.value)}
+              value={assingedTo}
+              onChange={(e) => setassingedTo(e.target.value)}
               required
             />
           </div>
@@ -125,18 +138,17 @@ const addToTask=()=>{
               type="date"
               className="form-control"
               id="newTaskDueDate"
-              value={dued}
-              onChange={(e) => sdued(e.target.value)}
+              value={duedate}
+              onChange={(e) => setduedate(e.target.value)}
             />
           </div>
         </div>
         <button
-          onClick={onSubmit}
+         onClick={onSubmit}
           className="btn btn-success btn-block"
           id="btnId"
           type="submit"
-          onKeyDown={addToTask}
-        >
+                 >
           Add Task
         </button>
       </form>

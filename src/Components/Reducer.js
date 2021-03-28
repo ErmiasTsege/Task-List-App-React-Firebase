@@ -1,21 +1,29 @@
 export const initialState={
-    basket:[],
+    alltask:[]
 
 };
 const reducer=(state,action)=>{
     console.log(action);
 
     switch(action.type){
-      case "ADD_TO_BASKET":
+      case "ADD_TO_Task":
       return {
         ...state,
-        basket: [...state.basket, action.item],  
+        alltask: [...state.alltask, action.item],  
     };
-    case "ADD_TO_DATA":
-        return {
-          ...state,
-          dataContainer: [...state.dataContainer, action.item],  
-      };
+    case "REMOVE_FROM_AllTask":
+      const index = state.alltask.findIndex(
+        (alltaskItem) => alltaskItem.id === action.id
+      );
+      let newalltaskItem = [...state.alltask];
+
+      if (index >= 0) {
+        newalltaskItem .splice(index, 1);
+      } else {
+        console.warn(
+          `Cant remove product (id: ${action.id}) as its not in basket!`
+        );
+      }
        default:
         return state;
     } 
